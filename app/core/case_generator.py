@@ -109,6 +109,11 @@ IMPORTANT CULTURAL NOTES:
 - Consider local health issues and practices
 - Names, locations, and social contexts should reflect Gulf culture
 - Include at least one Arabic term with translation where appropriate
+
+IMPORTANT SCHEMA REQUIREMENTS:
+- You MUST include the keyHistoryQuestions and keyExamManeuvers fields as arrays of strings
+- These fields are REQUIRED and cannot be omitted
+- If truly not applicable, include ["None"] but NEVER leave them empty or omit them
 """
     
     # Get chief complaint
@@ -144,7 +149,22 @@ IMPORTANT CULTURAL NOTES:
         gen_time = time.time() - start_time
         print(f"DEBUG: Case generated in {gen_time:.2f} seconds")
         
-        obj = OsceCase.model_validate_json(raw)
+        # Parse the JSON response first
+        case_data = json.loads(raw)
+        
+        # Ensure required fields exist
+        if 'keyHistoryQuestions' not in case_data:
+            case_data['keyHistoryQuestions'] = ["Take a detailed history of the presenting complaint"]
+        
+        if 'keyExamManeuvers' not in case_data:
+            case_data['keyExamManeuvers'] = ["Perform a relevant physical examination"]
+        
+        # Convert back to JSON
+        validated_json = json.dumps(case_data)
+        
+        # Now validate
+        obj = OsceCase.model_validate_json(validated_json)
+        
         # Make sure the language is set in the case object
         obj.lang = lang
         return obj
@@ -169,12 +189,27 @@ IMPORTANT CULTURAL NOTES:
             )}],
             model=CASE_GEN_MODEL,
             json_mode=True,
-            temperature=0.3, 
+            temperature=0.2, 
             max_tokens=2000,
             stream=False
         )
         
-        obj = OsceCase.model_validate_json(raw2)
+        # Parse the JSON response
+        case_data = json.loads(raw2)
+        
+        # Ensure required fields exist
+        if 'keyHistoryQuestions' not in case_data:
+            case_data['keyHistoryQuestions'] = ["Take a detailed history of the presenting complaint"]
+        
+        if 'keyExamManeuvers' not in case_data:
+            case_data['keyExamManeuvers'] = ["Perform a relevant physical examination"]
+        
+        # Convert back to JSON
+        validated_json = json.dumps(case_data)
+        
+        # Now validate
+        obj = OsceCase.model_validate_json(validated_json)
+        
         # Make sure the language is set in the case object
         obj.lang = lang
         return obj 

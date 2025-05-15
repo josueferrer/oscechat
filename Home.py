@@ -17,10 +17,10 @@ st.set_page_config(
 # Apply all CSS from ui.py (includes sidebar hiding)
 inject_css()
 
-# App header with stethoscope icon
+# App header with stethoscope and purple heart icons
 st.markdown("""
 <div style="display: flex; align-items: center; margin-bottom: 20px;">
-    <h1 style="margin: 0;">🩺 OSCE Chat Simulator</h1>
+    <h1 style="margin: 0;">🩺 💜 OSCE Chat Simulator</h1>
 </div>
 """, unsafe_allow_html=True)
 
@@ -184,12 +184,12 @@ with left_col:
 with right_col:
     st.header("OSCE Simulation Features")
     
-    # Feature list using the feature_list component
+    # Feature list using the feature_list component with purple-themed icons
     features = [
         ("⏱️", "Timed stations with countdown timer"),
         ("🧠", "AI-powered patient simulation"),
-        ("💊", "Clinical cases with detailed parameters"),
-        ("💡", "Hints available for guidance"),
+        ("💜", "Clinical cases with detailed parameters"),
+        ("💫", "Hints available for guidance"),
         ("📝", "Mandatory final diagnosis entry"),
         ("📊", "Detailed performance feedback")
     ]
