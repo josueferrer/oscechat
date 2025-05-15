@@ -11,7 +11,7 @@ st.set_page_config(
     page_title="OSCE Chat Simulator", 
     page_icon="🩺", 
     layout="wide",
-    initial_sidebar_state="collapsed"
+    initial_sidebar_state="collapsed"  # Options are "auto", "expanded", "collapsed"
 )
 
 # Apply all CSS from ui.py (includes sidebar hiding)
