@@ -34,7 +34,7 @@ ENV/
 *.swo
 
 # Streamlit
-.streamlit/secrets.toml
+# .streamlit/secrets.toml - we want to include the template
 
 # Mac OS
 .DS_Store
